@@ -22,8 +22,54 @@ devtools::install_github("hanel/KZ2018")
 
 (pro windows je soubor s příponou zip)
 
+
+### pozn. Práce s `data.table`
+
+```{r}
+require(KZ2018)
+data(vstup)
+```
+
+
+1. Filtorvání
+```{r, eval=FALSE}
+vstup[UPOV_ID == 1]
+```
+
+
+2. volba sloupců
+```{r, eval=FALSE}
+vstup[, Q]
+vstup[, Q*100]
+```
+
+3. Tvorba nových proměnných
+```{r}
+vstup[, R:=1000*(Q*60*60*24)/(A*1000000)]
+```
+
+4. skupinové charakteristiky
+```{r, eval=FALSE}
+vstup[, sum(R)]
+vstup[, sum(R), by = .(UPOV_ID, year(DTM), month(DTM))]
+```
+
+
+### Práce s modelem Bilan
+
+
 3. vytvořte nový model, nahrajte data, nakalibrujte, výsledky uložte 
 
 4. vytvořte funkci pro výpočet m-denních vod
 
 5. nakalibrujte model pomocí m-denních vod a výsledky porovnejte
+
+
+```{r}
+require(bilan)
+b = bil.new(type = 'd')
+bil.set.values(b, vstup[UPOV_ID == 1])
+bil.pet(b)
+res = bil.optimize(b)
+```
+
