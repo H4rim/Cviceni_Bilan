@@ -17,3 +17,13 @@ devtools::install_github("hanel/KZ2018")
 ```
 
 (je potřeba mít nainstalovaný balík `devtools`)
+
+2. stáhněte a nainstalujte model Bilan z https://github.com/hanel/KZ2018/tree/master/bilan
+
+(pro windows je soubor s příponou zip)
+
+3. vytvořte nový model, nahrajte data, nakalibrujte, výsledky uložte 
+
+4. vytvořte funkci pro výpočet m-denních vod
+
+5. nakalibrujte model pomocí m-denních vod a výsledky porovnejte
