@@ -73,3 +73,31 @@ bil.pet(b)
 res = bil.optimize(b)
 ```
 
+
+
+# DO PROTOKOLU Z CV. 1
+
+> Kalibrace modelu Bilan
+
+> Graf srážek, graf teploty
+
+> Graf pozorovaného a modelovaného odtoku
+
+```{r, cache=TRUE}
+res[, plot(DTM, RM, type = "l")]
+res[, lines(DTM, R, col = "red")]
+
+```
+
+
+> Graf `ET` a `ETa`
+
+> Graf `SS` a `SC`
+
+> Graf `SW` a `AWV2`
+
+```{r, cache = TRUE}
+res[, plot(DTM, SW, type = "l")]
+vstup[UPOV_ID==1, lines(DTM, AWV2, col = "red")]
+```
+

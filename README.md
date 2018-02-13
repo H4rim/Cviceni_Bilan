@@ -102,3 +102,46 @@ bil.set.values(b, vstup[UPOV_ID == 1])
 bil.pet(b)
 res = bil.optimize(b)
 ```
+
+DO PROTOKOLU Z CV. 1
+====================
+
+> Kalibrace modelu Bilan
+
+> Graf srážek, graf teploty
+
+> Graf pozorovaného a modelovaného odtoku
+
+``` r
+res[, plot(DTM, RM, type = "l")]
+```
+
+    ## NULL
+
+``` r
+res[, lines(DTM, R, col = "red")]
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-8-1.png)
+
+    ## NULL
+
+> Graf `ET` a `ETa`
+
+> Graf `SS` a `SC`
+
+> Graf `SW` a `AWV2`
+
+``` r
+res[, plot(DTM, SW, type = "l")]
+```
+
+    ## NULL
+
+``` r
+vstup[UPOV_ID==1, lines(DTM, AWV2, col = "red")]
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-9-1.png)
+
+    ## NULL
