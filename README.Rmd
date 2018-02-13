@@ -1,16 +1,19 @@
-KZ2018
-================
+---
+title: "KZ2018"
+output: github_document
+---
 
-Celkové zadání
-==============
+# Celkové zadání
 
 > Pro vybraný útvar povrchových vod (UPOV) modelujte hydrologickou bilanci pomocí charakteristik odtoku (m-denní vody), posuďte vliv užívání vod na jejich odhad a modelujte dopad klimatické změny na charakteristiky odtoku (m-denní vody a ukazatele sucha).
 
-Cvičení 1
-=========
 
-1.  nainstalujte balík KZ2018 z <https://github.com/hanel/KZ2018>
+# Cvičení 1
 
-``` r
+1. nainstalujte balík `KZ2018` z https://github.com/hanel/KZ2018
+
+```{r, eval=FALSE}
 devtools::install_github("hanel/KZ2018")
 ```
+
+(je potřeba mít nainstalovaný balík `devtools`)
