@@ -81,9 +81,10 @@ porovnej = function(res, crits = c('ME', 'MAE', 'RMSE', 'NRMSE %', 'PBIAS %')){
   
   # m-den graf
   md = mdr(res)
-  md[, plot(m, mR, type = 'l', ylim = c(min(mR, mRM), max(mR, mRM)))]
+  md[, plot(m, mR, type = 'l', ylim = c(range(mR, mRM)))]
   title(main = 'm-denni vody', line = -1)
   md[, lines(m, mRM, col = 'red')]
 }
 
-porovnej(res)
+porovnej(res[year(DTM)<1995])
+porovnej(res[year(DTM)>=1995])
