@@ -10,7 +10,7 @@ output: github_document
 
 # Cvičení 1
 
-1. nainstalujte balík `KZ2018` z https://github.com/hanel/KZ2018
+**1)** nainstalujte balík `KZ2018` z https://github.com/hanel/KZ2018
 
 ```{r, eval=FALSE}
 devtools::install_github("hanel/KZ2018")
@@ -18,8 +18,7 @@ devtools::install_github("hanel/KZ2018")
 
 (je potřeba mít nainstalovaný balík `devtools`)
 
-2. stáhněte a nainstalujte model Bilan z https://github.com/hanel/KZ2018/tree/master/bilan
-
+**2)** stáhněte a nainstalujte model Bilan z https://github.com/hanel/KZ2018/tree/master/bilan
 (pro windows je soubor s příponou zip)
 
 
@@ -31,24 +30,24 @@ data(vstup)
 ```
 
 
-1. Filtorvání
+*a)* Filtorvání
 ```{r, eval=FALSE}
 vstup[UPOV_ID == 1]
 ```
 
 
-2. volba sloupců
+*b)* volba sloupců
 ```{r, eval=FALSE}
 vstup[, Q]
 vstup[, Q*100]
 ```
 
-3. Tvorba nových proměnných
+*c)* Tvorba nových proměnných
 ```{r}
 vstup[, R:=1000*(Q*60*60*24)/(A*1000000)]
 ```
 
-4. skupinové charakteristiky
+*d)* skupinové charakteristiky
 ```{r, eval=FALSE}
 vstup[, sum(R)]
 vstup[, sum(R), by = .(UPOV_ID, year(DTM), month(DTM))]
@@ -58,12 +57,7 @@ vstup[, sum(R), by = .(UPOV_ID, year(DTM), month(DTM))]
 ### Práce s modelem Bilan
 
 
-3. vytvořte nový model, nahrajte data, nakalibrujte, výsledky uložte 
-
-4. vytvořte funkci pro výpočet m-denních vod
-
-5. nakalibrujte model pomocí m-denních vod a výsledky porovnejte
-
+*3)* vytvořte nový model, nahrajte data, nakalibrujte, výsledky uložte 
 
 ```{r}
 require(bilan)
@@ -83,7 +77,7 @@ res = bil.optimize(b)
 
 > Graf pozorovaného a modelovaného odtoku
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, echo=FALSE}
 res[, plot(DTM, RM, type = "l")]
 res[, lines(DTM, R, col = "red")]
 
@@ -96,8 +90,56 @@ res[, lines(DTM, R, col = "red")]
 
 > Graf `SW` a `AWV2`
 
-```{r, cache = TRUE}
+```{r, cache = TRUE, echo =FALSE}
 res[, plot(DTM, SW, type = "l")]
 vstup[UPOV_ID==1, lines(DTM, AWV2, col = "red")]
+```
+
+
+-----
+
+
+# Cvičení 2
+
+
+1. Porovnejte pozorovaný a modelovaný odtok pomocí několika způsobů:
+
+    a) graficky - graf distribučních funkcí/m-denních vod, korelační graf, QQ plot
+    b) pomocí ukazatelů shody (RMSE, MSE, NSE, KGE, apod. - využijte balík `hydroGOF`)
+    c) vyhodnoťe chybu (relativní/absolutní) v základních charakteristikých polohy, variability a m-denních vodách
+    d) vytvořte funkci pro vyčíslení mezi pozorovaným a modelovaným odtokem
+
+2. Vytvořte funkci, která bude sumarizovat vybrané výše uvedené body pomocí vhodně navrženého layoutu
+
+3. Nakalibrujte model Bilan pomocí charakteristik (modifikace `"critvars"`)
+
+    a) experimentujte se zahrnutými mírami polohy, variability, m-denními vodami apod.
+    b) porovnejte se standardní kalibrací
+    c) pomocí jakých charakteristik lze nakalibrovat model Bilan co nejblíže pozorované/modelované řadě?
+
+
+---
+
+- nakalibrujeme Bilan standardním způsobem
+
+```{r, warning=FALSE}
+require(KZ2018)
+data(vstup)
+vstup[, R:=1000*(Q*60*60*24)/(A*1000000)]
+require(bilan)
+b = bil.new(type = 'd')
+bil.set.values(b, vstup[UPOV_ID == 1])
+bil.pet(b)
+res = bil.optimize(b)
+```
+
+- grafické porovnání
+
+- porovnání pomocí `hydroGOF`
+
+```{r, message=FALSE, echo=c(1, 3), eval=-3}
+require(hydroGOF)
+knitr::kable(t(res[, gof(RM, R)]))
+res[, gof(RM, R)]
 ```
 
