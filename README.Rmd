@@ -111,12 +111,6 @@ vstup[UPOV_ID==1, lines(DTM, AWV2, col = "red")]
 
 2. Vytvořte funkci, která bude sumarizovat vybrané výše uvedené body pomocí vhodně navrženého layoutu
 
-3. Nakalibrujte model Bilan pomocí charakteristik (modifikace `"critvars"`)
-
-    a) experimentujte se zahrnutými mírami polohy, variability, m-denními vodami apod.
-    b) porovnejte se standardní kalibrací
-    c) pomocí jakých charakteristik lze nakalibrovat model Bilan co nejblíže pozorované/modelované řadě?
-
 
 ---
 
@@ -142,4 +136,13 @@ require(hydroGOF)
 knitr::kable(t(res[, gof(RM, R)]))
 res[, gof(RM, R)]
 ```
+
+
+# Cvičení 3
+
+Nakalibrujte model Bilan pomocí charakteristik (modifikace `"critvars"`)
+
+    a) experimentujte se zahrnutými mírami polohy, variability, m-denními vodami apod.
+    b) porovnejte se standardní kalibrací
+    c) pomocí jakých charakteristik lze nakalibrovat model Bilan co nejblíže pozorované/modelované řadě?
 

@@ -29,6 +29,19 @@ require(KZ2018)
 
     ## Loading required package: data.table
 
+    ## Loading required package: plotrix
+
+    ## Loading required package: hydroGOF
+
+    ## Loading required package: zoo
+
+    ## 
+    ## Attaching package: 'zoo'
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     as.Date, as.Date.numeric
+
 ``` r
 data(vstup)
 ```
@@ -138,12 +151,6 @@ Cvičení 2
 
 2.  Vytvořte funkci, která bude sumarizovat vybrané výše uvedené body pomocí vhodně navrženého layoutu
 
-3.  Nakalibrujte model Bilan pomocí charakteristik (modifikace `"critvars"`)
-
-    1.  experimentujte se zahrnutými mírami polohy, variability, m-denními vodami apod.
-    2.  porovnejte se standardní kalibrací
-    3.  pomocí jakých charakteristik lze nakalibrovat model Bilan co nejblíže pozorované/modelované řadě?
-
 ------------------------------------------------------------------------
 
 -   nakalibrujeme Bilan standardním způsobem
@@ -174,3 +181,12 @@ require(hydroGOF)
 ``` r
 ## res[, gof(RM, R)]
 ```
+
+Cvičení 3
+=========
+
+Nakalibrujte model Bilan pomocí charakteristik (modifikace `"critvars"`)
+
+    a) experimentujte se zahrnutými mírami polohy, variability, m-denními vodami apod.
+    b) porovnejte se standardní kalibrací
+    c) pomocí jakých charakteristik lze nakalibrovat model Bilan co nejblíže pozorované/modelované řadě?
