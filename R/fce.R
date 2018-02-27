@@ -53,3 +53,11 @@ porovnej = function(res, crits = c('ME', 'RMSE', 'PBIAS %', 'NSE', 'KGE'), plot 
  }
  res[, gof(R, RM)[crits, ]]
 }
+
+err_mdr = function(x){
+  m = c(30, 60, 90, 180, 270, 300, 330, 360, 365)
+  pcp = m/365.25
+  p = 1-pcp
+  qx = quantile(x, p)  
+  return(mean(abs(obs_mdr - qx)))
+}
