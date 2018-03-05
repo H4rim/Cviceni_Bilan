@@ -22,6 +22,8 @@ bil.set.critvars(b1, obs_vars = c('R', 'R'), mod_vars = c('RM', 'RM'), crit = c(
 
 res1 = bil.optimize(b1)
 porovnej(res1)
+
+
 res[, .(sd(R)/sd(RM))]
 
 porovnej(res)
@@ -37,7 +39,7 @@ err_mdr = function(x){
   m = c(30, 60, 90, 180, 270, 300, 330, 360, 365)
   pcp = m/365.25
   p = 1-pcp
-  qx = quantile(x, p)  
+  qx = quantile(x, p)
   return(mean(abs(obs_mdr - qx)))
 }
 
@@ -104,7 +106,7 @@ C4 = rbindlist(C4)
 ### Vyhodnocení
 
 C = rbind(
-  data.table(ID = 'C1', C1), 
+  data.table(ID = 'C1', C1),
   data.table(ID = 'C4', C4)
 )
 

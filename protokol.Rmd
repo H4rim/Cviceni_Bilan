@@ -1,0 +1,36 @@
+---
+title: "Protokol KZ 2018"
+author: "Student"
+date: "5 března 2018"
+output: html_document
+---
+
+# Úvod
+
+```{r}
+# zadání, motivace
+```
+
+
+# Model Bilan a použitá data
+
+- Kalibrace modelu Bilan
+- Graf srážek, graf teploty
+
+# Porovnání pozorované a modelované hydrologické bilance
+
+- Graf pozorovaného a modelovaného odtoku
+- Graf `ET` a `ETa`
+- Graf `SS` a `SC`
+- Graf `SW` a `AWV2`
+
+- Korelační graf, QQ graf
+- Graf m-denních vod
+
+- pomocí ukazatelů shody (RMSE, MSE, NSE, KGE, apod. - využijte balík `hydroGOF`)
+- vyhodnoťe chybu (relativní/absolutní) v základních charakteristikých polohy, variability a m-denních vodách
+
+# Kalibrace pomocí charakteristik
+
+- viz konec 3. cvičení
+
