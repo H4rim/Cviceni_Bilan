@@ -34,3 +34,9 @@ output: html_document
 
 - viz konec 3. cvičení
 
+(tj. Část "Parametrická nejistota" rozšiřte o kalibraci na 
+
+- průměr
+- sd
+- m-denni vody
+- vlastní "nejlepší" nastavení)
