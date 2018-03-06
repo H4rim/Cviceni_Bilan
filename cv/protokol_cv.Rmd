@@ -1,0 +1,154 @@
+---
+title: "Protokol KZ 2018"
+author: "Student"
+date: "5 bøezna 2018"
+output: html_document
+---
+
+```{r}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+
+# Úvod
+
+Pro modelování hydrologické bilance jsme pouili model Bilan.
+
+...
+
+# Model Bilan a pouitá data
+
+V balíku `KZ2018` jsou dostupná data pro dvì povodí a období xx-yy. Vzbrali jsme povodí 2 a roky 2000-2005.
+
+```{r, warning=FALSE, message=FALSE}
+require(KZ2018)
+require(bilan)
+data(vstup)
+dta = vstup[UPOV_ID==2 & year(DTM) %in% c(2000:2005)]
+```
+
+#### Graf sráek, graf teploty
+
+```{r, echo=FALSE, fig.cap="Graf sráek"}
+plot(dta$DTM, dta$P, type = 'l')
+# graf teploty
+```
+
+#### Kalibrace modelu
+
+Kalibrace modelu probíhá tak, e nejdøíve vytvoøíme novı denní model bilan, pak ....
+
+```{r}
+b = bil.new(type = 'd')
+bil.set.values(b, dta)
+bil.pet(b)
+res = bil.optimize(b)
+```
+
+Na následujícím grafu je zobrazen pozorovanı odtok (èernì) a modelovanı odtok (èervenì). Zdá se, e model Bilan podhodnocuje vysoké i nízké prùtoky.
+
+```{r, echo=FALSE, fig.cap="Graf pozorovaného a modelovaného odtoku.", results='hide'}
+res[, plot(DTM, R, type = 'l')]
+res[, lines(DTM, RM, col = "red")]
+```
+
+
+# Porovnání pozorované a modelované hydrologické bilance
+
+- Graf pozorovaného a modelovaného odtoku
+- Graf `ET` a `ETa`
+- Graf `SS` a `SC`
+- Graf `SW` a `AWV2`
+
+```{r, results='hide'}
+dta[, plot(DTM, ETa, type = 'l')]
+res[, lines(DTM, ET, col = "red")]
+```
+
+
+
+- Korelaèní graf, QQ graf
+- Graf m-denních vod
+
+- pomocí ukazatelù shody (RMSE, MSE, NSE, KGE, apod. - vyuijte balík `hydroGOF`)
+- vyhodnoe chybu (relativní/absolutní) v základních charakteristikıch polohy, variability a m-denních vodách
+
+# Kalibrace pomocí charakteristik
+
+- viz konec 3. cvièení
+
+(tj. Èást "Parametrická nejistota" rozšiøte o kalibraci na 
+- prùmìr
+- sd
+- m-denni vody
+- vlastní "nejlepší" nastavení)
+
+```{r}
+.i = 15
+```
+
+
+Pro kadı typ kalibrace optimalizujeme parametry `r .i`.
+
+
+#### Standardní kalibrace
+
+```{r, eval=TRUE, cache=TRUE}
+
+##### Pro standardni kalibraci
+b = bil.new(type = 'd')
+bil.set.values(b, input_vars = dta)
+bil.pet(b)
+
+bil.set.optim(b, method = 'DE', init_GS = 1)
+
+C1 = list()
+for (i in 1:.i){
+  res = bil.optimize(b)
+  C1[[length(C1) + 1]] = data.table(t(porovnej(res, plot = FALSE)  ))
+}
+
+C1 = rbindlist(C1)
+```
+
+#### C2 ... Pro kalibraci na prumer
+
+
+
+#### C3 ... Pro kalibraci na sd
+
+#### Kalibrace na prùmìr a smìrodatnou odchylku
+
+```{r, cache=TRUE}
+b1 = bil.new(type = 'd', modif = 'critvars')
+bil.set.values(b1, input_vars = dta)
+bil.pet(b1)
+bil.set.optim(b1, method = 'DE')
+
+bil.set.critvars(b1, obs_vars = c('R', 'R'), mod_vars = c('RM', 'RM'), crit = c("mean", 'sd'), weights = c(1, 1) )
+
+C4 = list()
+for (i in 1:.i){
+  res1 = bil.optimize(b1)
+  C4[[length(C4) + 1]] = data.table(t(porovnej(res1, plot = FALSE)  ))
+}
+
+C4 = rbindlist(C4)
+```
+
+#### C5 ... Kalibraci na m-denni vody
+
+#### C6 ... Nejlepsi kalibrace
+
+### Vyhodnocení
+
+```{r}
+C = rbind(
+  data.table(ID = 'C1', C1),
+  data.table(ID = 'C4', C4)
+)
+
+boxplot(ME ~ ID, data = C)
+boxplot(RMSE ~ ID, data = C)
+```
+
