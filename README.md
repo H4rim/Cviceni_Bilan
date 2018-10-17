@@ -9,7 +9,7 @@ Celkové zadání
 Cvičení 1
 =========
 
-**1)** nainstalujte balík `KZ2018` z <https://github.com/hanel/KZ2018>
+**1)** nainstalujte balík `KZ2018` z <https://github.com/H4rim/Cviceni_Bilan>
 
 ``` r
 devtools::install_github("hanel/KZ2018")
