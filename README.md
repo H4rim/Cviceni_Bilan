@@ -1,4 +1,4 @@
-KZ2018
+Cvičení Bilan
 ================
 
 Celkové zadání
